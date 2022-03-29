@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Result</title>
+  </head>
+  <body>
+    <h1>Submit 완료</h1>
+    <h1>입력된 유저정보 표시</h1>
+    <div th:text="${user.name}"></div>
+    <div th:text="${user.age}"></div>
+    <div th:text="${user.employed}"></div>
+    <div th:text="${user.gender}"></div>
+  </body>
+</html>

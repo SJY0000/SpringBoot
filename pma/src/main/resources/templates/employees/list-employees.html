@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head th:replace="layouts::헤드"> </head>
+  <body>
+    <nav th:replace="layouts:: 네브바"></nav>
+    <div class="container">
+      <h1>직원 현황</h1>
+      <a class="btn btn-outline-success my-2" th:href="@{/employees/new}">추가</a>
+      <table class="table table-hover">
+        <thead class="table-dark">
+          <tr class="fw-bold">
+            <th>성</th>
+            <th>이름</th>
+            <th>이메일</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="employee : ${employeeList}">
+            <td th:text="${employee.lastName}"></td>
+            <td th:text="${employee.firstName}"></td>
+            <td th:text="${employee.email}"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <footer th:replace="layouts::푸터"></footer>
+  </body>
+</html>
