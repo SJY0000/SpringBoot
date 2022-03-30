@@ -12,6 +12,7 @@
             <th>성</th>
             <th>이름</th>
             <th>이메일</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
@@ -19,6 +20,11 @@
             <td th:text="${employee.lastName}"></td>
             <td th:text="${employee.firstName}"></td>
             <td th:text="${employee.email}"></td>
+            <td>
+              <!-- thymeleaf를 사용 할 때 (id=값) = ?id=값 -->
+              <a th:href="@{/employees/update(id=${employee.employeeId})}" class="btn btn-outline-info btn-sm">수정</a>
+              <a th:href="@{/employees/update(id=${employee.employeeId})}" class="btn btn-outline-danger btn-sm" onclick="if((!confirm('정말로 삭제할까요?')))">삭제</a>
+            </td>
           </tr>
         </tbody>
       </table>

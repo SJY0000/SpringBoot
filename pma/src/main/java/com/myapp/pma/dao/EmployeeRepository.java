@@ -19,4 +19,7 @@ public interface EmployeeRepository extends CrudRepository<Employee, Long>{
 			+ "GROUP BY e.EMPLOYEE_ID "
 			+ "ORDER BY count  desc ")
 	public List<EmployeeProject> employeeProjects();
+	
+	//새로 만든 쿼리문 id 입력해서 직원찾기
+	Employee findByEmployeeId(Long id);
 }

@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.myapp.pma.entities.Employee;
 import com.myapp.pma.services.EmployeeService;
@@ -39,5 +40,13 @@ public class EmployeeController {
 		model.addAttribute("employeeList", employeeList);
 		
 		return"employees/list-employees";
+	}
+	
+	@GetMapping("/update")
+	public String displayEmployeeUpdateForm(@RequestParam("id") long id, Model model) {
+		// id로 DB에서 업데이트할 직원을 찾아서 화면(뷰)에 표시하기
+		Employee employee = employeeService.findByEmployeeId(id); //DB에서 찾기
+		model.addAttribute("employee", employee);
+		return "employees/new-employee";
 	}
 }
