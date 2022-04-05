@@ -37,12 +37,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Override // 4. 허가
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-			.antMatchers("/projects/new").hasRole("ADMIN") // 새 프로젝트는 관리자만
-			.antMatchers("/projects/save").hasRole("ADMIN")
-			.antMatchers("/employees/new").hasRole("ADMIN") // 새 직원은 관리자만
-			.antMatchers("/employees/save").hasRole("ADMIN")
-			.antMatchers("/employees/").authenticated() // 인증된 유저
-			.antMatchers("/projects/").authenticated()
+//			.antMatchers("/projects/new").hasRole("ADMIN") // 새 프로젝트는 관리자만
+//			.antMatchers("/projects/save").hasRole("ADMIN")
+//			.antMatchers("/employees/new").hasRole("ADMIN") // 새 직원은 관리자만
+//			.antMatchers("/employees/save").hasRole("ADMIN")
+//			.antMatchers("/employees/").authenticated() // 인증된 유저
+//			.antMatchers("/projects/").authenticated()
 			.antMatchers("/","/**").permitAll()				// 누구든 접근 가능
 			.and()
 			.formLogin(form -> form.loginPage("/login")
@@ -51,6 +51,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	
 		
 		// Security에서는 기본적으로 csrf 방지가 적용중
-//		http.csrf().disable(); // 사용자 의도치 않게 행동하는 것을 방지, save 후 redirect 하는 과정에서 csrf 룰에 위배되어 에러 출력
+		http.csrf().disable(); // 사용자 의도치 않게 행동하는 것을 방지, save 후 redirect 하는 과정에서 csrf 룰에 위배되어 에러 출력
 	}
 }

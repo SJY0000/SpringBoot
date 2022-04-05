@@ -12,4 +12,5 @@ public interface ProjectRepository extends CrudRepository<Project, Long> {
 	@Override
 	List<Project> findAll(); // 기존의 findAll() return 타입이 Itreable<Project>에서 변경
 	
+	Project findByProjectId(Long id);
 }

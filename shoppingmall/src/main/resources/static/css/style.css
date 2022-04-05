@@ -1,0 +1,4 @@
+span.error {
+  /* 에러 메시지를 표시할 색상 */
+  color: coral !important;
+}

@@ -30,4 +30,20 @@ public class EmployeeService {
 	public Employee findByEmployeeId(long id) {
 		return employeeRepository.findByEmployeeId(id);
 	}
+
+	public void update(Employee employee) {
+		// DB에서 Update할 Employee 객체를 불러온다.
+		Employee emp = employeeRepository.findByEmployeeId(employee.getEmployeeId());
+		// 필요한 내용만 업데이트 한다.
+		emp.setFirstName(employee.getFirstName());
+		emp.setLastName(employee.getLastName());
+		emp.setEmail(employee.getEmail());
+		
+		employeeRepository.save(emp);
+	}
+
+	public void deleteEmployee(long id) {
+		employeeRepository.deleteById(id);
+		
+	}
 }

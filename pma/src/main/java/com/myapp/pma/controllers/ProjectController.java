@@ -2,9 +2,12 @@ package com.myapp.pma.controllers;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,26 +42,54 @@ public class ProjectController {
 		return "projects/new-project";
 	}
 	
-	// 프로젝트 생성할 때 직원 선택을하면 "employees"라는 이름의 List<Employee> 타입의 데이터를 변수로 받음
+
 	@PostMapping("/save")
-	public String createProject(Project project, @RequestParam("employees") List<Long> ids) {
-		projectService.save(project); // DB에 project객체를 테이블에 저장
-//		
-//		// Project 생성 html에서 올라온 직원 id 값들을 입력하여 직원리스트를 가져와 각각의 직원에ㅔ게 프로젝트를 입력
-//		Iterable<Employee> selectEmployees =  employeeRepository.findAllById(ids);
-//		for(Employee emp : selectEmployees) {
-//			emp.setProject(project); // 각각의 직원 객체에 프로젝트 입력하고
-//			employeeRepository.save(emp); // DB에 다시 저장
-//		}
-		return "redirect:/projects/new"; //post-redirect-get 패턴
+	public String createProject(@Valid Project project, Errors errors, Model model) {
+		if (errors.hasErrors()) {
+			// 유효성 검사를 할 객체인 project의 정보는 유지되어 넘어오지만 직원정보는 넘어오지 않기 때문에 유효성검사 에러 발생시 직원정보를 넘겨줘야함
+			List<Employee> empList = employeeService.findAll();
+			
+			model.addAttribute("empList", empList);
+			
+			return "projects/new-project";
+		}
+		
+		Long id = project.getProjectId();
+		
+		if(id != null) {
+			projectService.update(project);
+		} else {
+			projectService.save(project);
+		}
+		
+		return "redirect:/projects"; //post-redirect-get 패턴
 	}
 	
-	@GetMapping("/")
+	@GetMapping
 	public String displayProjects(Model model) {
 		List<Project> projectList = projectService.findAll();
 		
 		model.addAttribute(projectList);
 		
 		return"projects/list-projects";
+	}
+	
+	@GetMapping("/update")
+	public String updateProjects(@RequestParam("id") long id, Model model) {
+		Project project = projectService.findByProjectId(id);
+		
+		model.addAttribute("project", project);
+		
+		List<Employee> empList = employeeService.findAll();
+		
+		model.addAttribute("empList", empList);
+		return "projects/new-project";
+	}
+	
+	@GetMapping("/delete")
+	public String deleteProjects(@RequestParam("id") long id) {
+		projectService.delete(id);
+		return "redirect:/projects";
+		
 	}
 }

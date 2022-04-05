@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 //import javax.persistence.OneToMany;
 
 @Entity // DB의 테이블과 연결될 클래스
@@ -19,9 +21,15 @@ public class Project {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long projectId; // 프로젝트 아이디 (CamelCase => DB project_id), 기본키(auto increment)
+	private Long projectId; // 프로젝트 아이디 (CamelCase => DB project_id), 기본키(auto increment)
+	
+	@NotBlank(message = "프로젝트명을 입력해주세요.")
+	@Size(min = 4, message = "최소 4글자 이상 입력해주세요")
 	private String name; // 프로젝트 이름
+	
 	private String stage; // 프로젝트 상태 (시작전, 진행중, 완료)
+	
+	@NotBlank(message = "프로젝트 설명을 적어주세요.")
 	private String description; // 설명
 
 //	@OneToMany(mappedBy = "project") // 1 : n의 관계, 상호연관관계일 때 사용, ManyToOne의 변수명, Project 테이블에 맵핑
@@ -32,7 +40,7 @@ public class Project {
 				inverseJoinColumns = @JoinColumn(name = "employee_id"))
 	// n : n 관계에서는 테이블을 만들고 생성한 테이블에 id를 넣고 다른 테이블의 id도 입력
 	private List<Employee> employees;
-
+ 
 	public Project() {
 	}
 
@@ -52,11 +60,11 @@ public class Project {
 		this.employees = employees;
 	}
 
-	public long getProjectId() {
+	public Long getProjectId() {
 		return projectId;
 	}
 
-	public void setProjectId(long projectId) {
+	public void setProjectId(Long projectId) {
 		this.projectId = projectId;
 	}
 
