@@ -2,3 +2,8 @@ span.error {
   /* 에러 메시지를 표시할 색상 */
   color: coral !important;
 }
+table.sorting tr:not(.home) {
+  cursor: pointer; /* 옮길 수 있는 행만 마우스 손가락 표시*/
+}
+.ui-state-highlight {
+}
