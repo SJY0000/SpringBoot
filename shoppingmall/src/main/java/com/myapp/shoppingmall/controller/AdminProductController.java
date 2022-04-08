@@ -10,6 +10,9 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -37,8 +41,11 @@ public class AdminProductController {
 	private CategoryRepository categoryRepo;
 
 	@GetMapping
-	public String index(Model model) {
-		List<Product> products = productRepo.findAll();
+	public String index(Model model, @RequestParam(value = "page", defaultValue = "0") Integer page) {
+		int perPage = 6; // @RequestParam에 같이 적어도 되지만 이번엔 따로 적기 (한 페이지당 최대 6개)
+		Pageable pageable = PageRequest.of(page, perPage); // 표시할 페이지, 한 페이지에 표시할 데이터 수(6개)
+		// data.domain.page
+		Page<Product> products = productRepo.findAll(pageable);
 		List<Category> categories = categoryRepo.findAll();
 
 		// Category id와 name을 map에 담아 index페이지에 전송
@@ -50,6 +57,15 @@ public class AdminProductController {
 
 		model.addAttribute("products", products);
 		model.addAttribute("cateIdAndName", cateIdAndName);
+		
+		// Pagenation을 위해 필요한 정보
+		long count = productRepo.count(); // 전체 갯수 (long 타입으로 Return)
+		double pageCount = Math.ceil((double)count / (double)perPage); // 13/ 6 = 2.12, int로 나누면 소수점이 출력이 안되기때문에 double타입으로 계산한다.
+		
+		model.addAttribute("pageCount",pageCount); // 총페이지
+		model.addAttribute("perPage", perPage);		// 페이지당 표시 아이템수
+		model.addAttribute("count", count);			// 총 아이템 갯수
+		model.addAttribute("page", page);			// 현재 페이지
 		
 		return "/admin/products/index";
 	}
