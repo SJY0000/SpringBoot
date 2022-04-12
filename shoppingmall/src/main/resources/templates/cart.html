@@ -60,10 +60,10 @@
           kakaoPay();
         });
       });
-    </script>
-    <script th:inline="javascript">
+
       function kakaoPay() {
         var IMP = window.IMP; // 생략 가능
+
         IMP.init('imp97492501'); // 예: imp00000000
         IMP.request_pay(
           {

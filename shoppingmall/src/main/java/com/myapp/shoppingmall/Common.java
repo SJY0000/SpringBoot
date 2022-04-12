@@ -1,5 +1,6 @@
 package com.myapp.shoppingmall;
 
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 
@@ -27,10 +28,13 @@ public class Common {
 	private CategoryRepository categoryRepo;
 	
 	@ModelAttribute
-	public void sharedData(Model model, HttpSession session) {
+	public void sharedData(Model model, HttpSession session, Principal principal) {
+		if (principal != null) { // 인증된 상태
+			model.addAttribute("principal" ,principal.getName()); // 유저네임을 전달
+		}
 		// cpages에 모든 페이지들을 순서대로 담아서 전달
 		List<Page> cpages = pageRepo.findAllByOrderBySortingAsc();
-		List<Category> categories = categoryRepo.findAll();
+		List<Category> categories = categoryRepo.findAllByOrderBySortingAsc();
 		// 현재 Cart 상태
 		boolean cartActive = false; // Cart가 존재하지 않을 때 false
 		

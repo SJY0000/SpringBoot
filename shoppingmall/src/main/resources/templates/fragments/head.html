@@ -1,7 +1,6 @@
 <head th:fragment="head-front">
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-
   <title>쇼핑몰</title>
 
   <link rel="canonical" href="https://getbootstrap.com/docs/4.6/examples/starter-template/" />
@@ -15,7 +14,8 @@
 <head th:fragment="head-admin">
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-
+  <meta id="_csrf" name="_csrf" th:content="${_csrf.token}" />
+  <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}" />
   <title>관리자페이지</title>
 
   <link rel="canonical" href="https://getbootstrap.com/docs/4.6/examples/starter-template/" />
