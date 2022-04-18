@@ -10,7 +10,41 @@
       <!-- 컨텐츠 시작 -->
       <div class="container-fluid py-4">
         <!-- 빈 컨텐츠 (여기서 시작)-->
-        <h1>리스트 페이지</h1>
+        <a th:href="@{/board/enroll}" class="btn btn-primary my-3">게시글 등록</a>
+        <div class="card">
+          <div class="table-responsive">
+            <table class="table align-items-center mb-0">
+              <thead>
+                <tr>
+                  <th class="text-center text-secondary text-xxs font-weight-bolder opacity-7">No</th>
+                  <th class="text-center text-secondary text-xxs font-weight-bolder opacity-7">제목</th>
+                  <th class="text-center text-secondary text-xxs font-weight-bolder opacity-7">작성자</th>
+                  <th class="text-center text-secondary text-xxs font-weight-bolder opacity-7">등록일</th>
+                  <th class="text-center text-secondary text-xxs font-weight-bolder opacity-7">수정일</th>
+                  <th class="text-secondary opacity-7">기타</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr th:each="board : ${boardList}">
+                  <td class="align-middle text-center">
+                    <span class="text-secondary text-sx" th:text="${board.bno}"></span>
+                  </td>
+                  <td class="align-middle text-center">
+                    <!-- thymeleaf문법에서는 Parameter로 넘길 때는 ()안에 변수명과 값을 넣어준다 -->
+                    <a th:href="@{/board/get(bno=${board.bno})}"><span class="text-secondary text-sx" th:text="${board.title}"></span></a>
+                    <!-- <a th:href="@{'/board/list/' + ${board.bno}}"><span class="text-secondary text-sx" th:text="${board.title}"></span></a> -->
+                  </td>
+                  <td class="align-middle text-center">
+                    <span class="text-secondary text-sx" th:text="${board.writer}"></span>
+                  </td>
+                  <td class="align-middle text-center">
+                    <!-- 연-월-일 am,pm 시:분:초, thymeleaf문법에서 String타입에서 Date타입을 나타낼때 이런식으로 사용-->
+                    <span class="text-secondary text-sx" th:text="${#temporals.format(board.regdate, 'yyyy-MM-dd a hh:mm:ss')}"></span> 
+                  </td>
+                  <td class="align-middle text-center">
+                    <span class="text-secondary text-sx" th:text="${#temporals.format(board.updateDate, 'yyyy-MM-dd a hh:mm:ss')}"></span>
+                  </td>
+                </tr>
       </div>
     </main>
 

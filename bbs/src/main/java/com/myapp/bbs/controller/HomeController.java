@@ -30,6 +30,4 @@ public class HomeController {
 	public String register() {
 		return "pages/sign-up";
 	}	
-
-
 }
