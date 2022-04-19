@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.myapp.bbs.model.BoardVO;
+import com.myapp.bbs.model.Criteria;
+import com.myapp.bbs.model.PageMakerDTO;
 import com.myapp.bbs.service.BoardService;
 
 import lombok.extern.java.Log;
@@ -26,11 +28,22 @@ public class BoardController {
 	}
 
 	@GetMapping("/list")
-	public String boardListGet(Model model) {
+	public String boardListGet(Criteria cri, Model model) {
 		log.info("게시판 리스트 페이지 진입");
-		model.addAttribute("boardList", boardService.getList());
+		model.addAttribute("boardList", boardService.getListPaging(cri));
+		
+		int total = boardService.getTotal();
+		PageMakerDTO pmk = new PageMakerDTO(total, cri);
+		model.addAttribute("pmk", pmk);
+		
 		return "list";
 	}
+//	@GetMapping("/list")
+//	public String boardListGet(Model model) {
+//		log.info("게시판 리스트 페이지 진입");
+//		model.addAttribute("boardList", boardService.getList());
+//		return "list";
+//	}
 	/**
 	 * 게시글 조회하기
 	 * @param bno
@@ -44,7 +57,7 @@ public class BoardController {
 //	}
 	
 	@GetMapping("/get")
-	public String getBoard(@RequestParam("bno") int bno, Model model) {
+	public String getBoard(@RequestParam("bno") int bno, Model model) { // bno 값이 없으면 에러남, @RequestParam 안적으면 에러 안남, 변수 사용하면 무조건 있어야 함
 		model.addAttribute("board", boardService.getPage(bno));
 		return "get";
 	}

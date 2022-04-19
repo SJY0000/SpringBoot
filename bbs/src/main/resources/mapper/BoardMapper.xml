@@ -17,6 +17,17 @@
      	select * 
      	from board
     </select>
+    
+    <!-- 게시물 목록(페이징) : skip, amount는 Criteria 객체에 입력됨 -->
+    <select id="getListPaging" resultType="BoardVO">
+    	select *
+    	from ( 
+    		select bno, title, writer, regdate, updatedate
+    		from board
+    		order by bno desc
+    		) as T1
+    	limit #{skip}, #{amount}
+    </select>
      
      <!-- board 테이블의 글 불러오기 -->
      <select id="getPage" resultType="BoardVO">
@@ -37,4 +48,10 @@
      	delete from board 
      	where bno=#{bno}
      </delete>
+     
+     <!-- 총 게시글 갯수 구하기 -->
+     <select id="getTotal" resultType="int">
+     select count(*)
+     from board
+     </select>
 </mapper>

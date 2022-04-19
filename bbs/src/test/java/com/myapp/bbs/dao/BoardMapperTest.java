@@ -10,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.test.annotation.Rollback;
 
 import com.myapp.bbs.model.BoardVO;
+import com.myapp.bbs.model.Criteria;
 
 import lombok.extern.java.Log;
 
@@ -62,8 +63,21 @@ public class BoardMapperTest {
 //		
 //		log.info("결과 : " + result);		// 1로 나오면 성공
 		
-		// 게시글 삭제하기 테스트
-		int result = boardMapper.delete(9);
+//		// 게시글 삭제하기 테스트
+//		int result = boardMapper.delete(9);
+//		log.info("" + result);
+		
+//		// 페이징 
+//		Criteria cri = new Criteria(); // 기본 생성자 생성 (1,10)(pageNum, amount)
+//		cri.setPageNum(2);
+//		cri.setAmount(5);
+//		List<BoardVO> list = boardMapper.getListPaging(cri);
+//		
+//		list.forEach(board -> log.info("" + board));
+		
+		// 총 게시글 갯수
+		int result = boardMapper.getTotal();
 		log.info("" + result);
+		
 	}
 }
