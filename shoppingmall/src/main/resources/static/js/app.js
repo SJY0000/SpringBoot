@@ -19,4 +19,8 @@ $(function () {
       console.error(error);
     });
   }
+
+  $('a.nav-link').on('mouseenter', function () {
+    $('a.nav-link').closest('li').toggleClass('Choice');
+  });
 });

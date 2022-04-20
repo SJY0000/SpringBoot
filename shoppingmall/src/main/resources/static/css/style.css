@@ -23,3 +23,7 @@ div.productAdded {
 .hide {
   display: none;
 }
+
+li.list-group-item Choice {
+  background-color: gray;
+}
