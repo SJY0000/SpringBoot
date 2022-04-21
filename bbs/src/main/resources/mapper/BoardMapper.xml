@@ -6,6 +6,7 @@
 <!-- com.myapp.bbs.dao 패키지 안의 BoardMapper.java를 여기서 입력하겠다는 설정  -->
 <mapper namespace="com.myapp.bbs.dao.BoardMapper">
 
+<!-- 검색 조건문 -->
 	<sql id="criteria">
 		<trim prefix="where (" suffix=")" prefixOverrides="OR">
 			<foreach collection="typeArr" item="type">

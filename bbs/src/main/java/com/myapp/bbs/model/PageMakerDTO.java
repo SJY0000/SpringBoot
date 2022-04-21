@@ -1,6 +1,5 @@
 package com.myapp.bbs.model;
 
-import lombok.Data;
 
 /**
  * 페이지 네이션을 위해서 전체게시물 수와 cri를 입력받아 계산하여
@@ -8,7 +7,6 @@ import lombok.Data;
  * 
  *
  */
-@Data
 public class PageMakerDTO {
 	
 	// 시작 페이지(현재페이지)
@@ -42,7 +40,7 @@ public class PageMakerDTO {
 		
 		// 실제 마지막 페이지(realend)가 화면에 보이는 마지막페이지(endPage)보다 작은경우, endPage값을 조정
 		if(realend < this.endPage) {
-			realend = this.endPage;
+			this.endPage = realend; // realend = this.endPage 하면 적용이 안됨
 		}
 		
 		// < 이전페이지가 true이려면 시작 페이지(startPage)값이 1보다 큰 경우 true
@@ -50,6 +48,60 @@ public class PageMakerDTO {
 		
 		// > 다음페이지가 true이려면 마지막 페이지(endPage)값이 realend값보다 작은 경우 true
 		this.next= this.endPage < realend;
+	}
+
+	public int getStartPage() {
+		return startPage;
+	}
+
+	public void setStartPage(int startPage) {
+		this.startPage = startPage;
+	}
+
+	public int getEndPage() {
+		return endPage;
+	}
+
+	public void setEndPage(int endPage) {
+		this.endPage = endPage;
+	}
+
+	public boolean isPrev() {
+		return prev;
+	}
+
+	public void setPrev(boolean prev) {
+		this.prev = prev;
+	}
+
+	public boolean isNext() {
+		return next;
+	}
+
+	public void setNext(boolean next) {
+		this.next = next;
+	}
+
+	public int getTotal() {
+		return total;
+	}
+
+	public void setTotal(int total) {
+		this.total = total;
+	}
+
+	public Criteria getCri() {
+		return cri;
+	}
+
+	public void setCri(Criteria cri) {
+		this.cri = cri;
+	}
+
+	@Override
+	public String toString() {
+		return "PageMakerDTO [startPage=" + startPage + ", endPage=" + endPage + ", prev=" + prev + ", next=" + next
+				+ ", total=" + total + ", cri=" + cri + "]";
 	}
 	
 	

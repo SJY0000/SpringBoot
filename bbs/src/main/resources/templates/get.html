@@ -44,6 +44,39 @@
                 </div>
               </div>
             </div>
+            <div class="row mt-2">
+              <!-- 댓글 입력 폼-->
+              <div class="col-md-10 me-auto ms-auto">
+                <div class="card card-body">
+                  <div class="row">
+                    <div class="col-3">
+                      <div class="input-group input-group-outline mb-3">
+                        <label class="form-label">글쓴이</label>
+                        <input type="text" class="form-control" id="writer" required />
+                      </div>
+                      <div class="text-center">
+                        <button id="reply-btn" class="btn bg-gradient-primary w-100 mb-0">댓글달기</button>
+                      </div>
+                    </div>
+                    <div class="col-9">
+                      <div class="input-group input-group-outline mb-0">
+                        <div class="input-group input-group-dynamic">
+                          <textarea id="content" class="form-control" rows="4" placeholder="댓글 내용을 적어주세요." required></textarea>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- 댓글리스트-->
+            <div class="row mt-2">
+              <div class="col-md-10 me-auto ms-auto">
+                <div class="card card-plain">
+                  <ul class="list-group" id="reply-list"></ul>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -60,15 +93,24 @@
       }
 
       // a태그들에 키워드를 추가 자바스크립트로 요청
+      //목록,수정 클릭시
       const links = document.querySelectorAll('a.page');
-      links.forEach(function (link) {
+      links.forEach((link) => {
         link.addEventListener('click', function (e) {
           e.preventDefault();
-          let keyword = '[[${cri.keyword}]]'; // 키워드 변수 선언d
-
-          location.href = this.getAttribute('href') + '&keyword=' + keyword; // this = a태그, 현재 클릭한 a태그의 주소를 가져옴
+          let keyword = '[[${cri.keyword}]]'; //키워드가 있을경우 키워드 추가
+          let type = '[[${cri.type}]]';
+          if (keyword.trim()) {
+            keyword = '&keyword=' + keyword;
+            type = '&type=' + type;
+          }
+          location.href = this.getAttribute('href') + keyword + type;
         });
       });
+
+      // 댓글달기 버튼 클릭 시 이벤트
+      const replyButton = document.getElementById('reply-btn');
+      replyButton.addEventListener('click', function () {});
     </script>
   </body>
 </html>
