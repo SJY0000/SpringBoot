@@ -118,8 +118,6 @@
         location.href = '/board/list?pageNum=1' + keyword + type; // 처음 키워드로 검색시 무조건 1페이지로 이동
       })
 
-
-      
       // 페이지네이션의 a 태그들을 전부 자바스크립트 요청으로 바꾸기(키워드 추가)
       const pageLinks = document.querySelectorAll('ul.pagination .page-link');
       pageLinks.forEach(function(link){
