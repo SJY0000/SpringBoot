@@ -33,7 +33,7 @@
                         <input type="text" class="form-control" th:field="*{writer}" readonly required />
                       </div>
                       <div class="text-center">
-                        <a th:href="@{/board/list}" class="btn btn-danger">수정 취소</a>
+                        <a th:href="@{/board/list} + '?pageNum=__${cri.pageNum}__" class="btn btn-danger">수정 취소</a>
                         <button type="submit" class="btn btn-success">수정 완료</button>
                       </div>
                     </form>

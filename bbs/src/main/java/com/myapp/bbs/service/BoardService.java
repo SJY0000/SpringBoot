@@ -20,5 +20,5 @@ public interface BoardService {
 	
 	public int delete(int bno); // 게시글 삭제
 	
-	public int getTotal(); // 게시글 총 갯수
+	public int getTotal(Criteria cri); // 게시글 총 갯수
 }

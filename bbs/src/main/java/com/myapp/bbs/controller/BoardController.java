@@ -32,7 +32,7 @@ public class BoardController {
 		log.info("게시판 리스트 페이지 진입");
 		model.addAttribute("boardList", boardService.getListPaging(cri));
 		
-		int total = boardService.getTotal();
+		int total = boardService.getTotal(cri);
 		PageMakerDTO pmk = new PageMakerDTO(total, cri);
 		model.addAttribute("pmk", pmk);
 		
@@ -57,8 +57,9 @@ public class BoardController {
 //	}
 	
 	@GetMapping("/get")
-	public String getBoard(@RequestParam("bno") int bno, Model model) { // bno 값이 없으면 에러남, @RequestParam 안적으면 에러 안남, 변수 사용하면 무조건 있어야 함
+	public String getBoard(@RequestParam("bno") int bno, Model model, Criteria cri) { // bno 값이 없으면 에러남, @RequestParam 안적으면 에러 안남, 변수 사용하면 무조건 있어야 함
 		model.addAttribute("board", boardService.getPage(bno));
+		model.addAttribute("cri", cri);
 		return "get";
 	}
 	
@@ -84,8 +85,9 @@ public class BoardController {
 //	}
 	
 	@GetMapping("/modify")
-	public String boardModifyGet(@RequestParam("bno") int bno, Model model) {
+	public String boardModifyGet(@RequestParam("bno") int bno, Model model, Criteria cri) {
 		model.addAttribute("board", boardService.getPage(bno));
+		model.addAttribute("cri",cri);
 		return "modify";
 	}
 	

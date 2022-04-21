@@ -1,7 +1,7 @@
 <nav th:fragment="네브" class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
   <div class="container-fluid py-1 px-3">
     <nav aria-label="breadcrumb">
-      <h6 class="font-weight-bolder mb-0 py-3">페이지 제목</h6>
+      <h6 id="pageName" class="font-weight-bolder mb-0 py-3">페이지 제목</h6>
       <script th:if="${message}">
         let m = '[[${message}]]'; // redirect로 넘어온 message 저장
         alert(m);

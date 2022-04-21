@@ -75,9 +75,9 @@ public class BoardMapperTest {
 //		
 //		list.forEach(board -> log.info("" + board));
 		
-		// 총 게시글 갯수
-		int result = boardMapper.getTotal();
-		log.info("" + result);
+//		// 총 게시글 갯수
+//		int result = boardMapper.getTotal();
+//		log.info("" + result);
 		
 	}
 }
