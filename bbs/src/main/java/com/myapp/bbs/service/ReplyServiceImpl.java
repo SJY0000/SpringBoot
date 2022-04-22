@@ -16,10 +16,8 @@ public class ReplyServiceImpl implements ReplyService{
 	}
 
 	@Override
-	public List<ReplyVO> getReplyList(int reply_bno) {
-		List<ReplyVO> list = replyMapper.getReplyList(reply_bno);
-		
-		return list;
+	public List<ReplyVO> getReplyList(int reply_bno) {	
+		return replyMapper.getReplyList(reply_bno);
 	}
 
 	@Override
