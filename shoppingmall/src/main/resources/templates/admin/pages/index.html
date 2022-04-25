@@ -18,8 +18,8 @@
           <tr th:each="page : ${pages}" th:id="'id_' + ${page.id}" th:class="${page.slug}">
             <td th:text="${page.title}"></td>
             <td th:text="${page.slug}"></td>
-            <td><a th:href="@{'/admin/pages/edit/' + ${page.id}}">수정</a></td>
-            <td><a th:if="${page.slug != 'home'}" th:href="@{'/admin/pages/delete/' + ${page.id}}" class="deleteConfirm">삭제</a></td>
+            <td><a th:href="@{'/admin/pages/edit/' + ${page.id}}" style="color: blue" class="fw-bold">수정</a></td>
+            <td><a th:if="${page.slug != 'home'}" th:href="@{'/admin/pages/delete/' + ${page.id}}" class="deleteConfirm fw-bold" style="color: red">삭제</a></td>
           </tr>
         </table>
       </div>
