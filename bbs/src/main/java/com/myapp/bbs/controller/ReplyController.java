@@ -45,10 +45,10 @@ public class ReplyController {
 		return reply;
 	}
 	
-	@DeleteMapping("/{no}")
-	public void replyDelete(@PathVariable("no") int no) {
+	@DeleteMapping("/{id}")
+	public void replyDelete(@PathVariable("id") int id) {
 		
-		replyService.delete(no);
+		replyService.delete(id);
 	}
 
 }

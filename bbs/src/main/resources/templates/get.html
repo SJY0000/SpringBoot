@@ -161,12 +161,14 @@
       }
 
       function deleteReply(e) {
-        http
-          .delete('/reply/' + e.dataset.id)
-          .then((res) => console.log(res))
-          .catch((err) => console.log(err));
+        if (confirm('정말 삭제하시겠습니까?')) {
+          http
+            .delete('/reply/' + e.dataset.id)
+            .then((res) => console.log(res))
+            .catch((err) => console.log(err));
 
-        location.reload();
+          e.parentElement.parentElement.remove();
+        }
       }
 
       function replyListView(items) {
