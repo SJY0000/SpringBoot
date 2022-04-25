@@ -2,17 +2,21 @@ package com.myapp.bbs.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.myapp.bbs.dao.ReplyMapper;
 import com.myapp.bbs.model.ReplyVO;
 
+@Service
 public class ReplyServiceImpl implements ReplyService{
 
+	@Autowired
 	private ReplyMapper replyMapper;
 	
 	@Override
 	public void enroll(ReplyVO reply) {
 		replyMapper.enroll(reply);
-		
 	}
 
 	@Override

@@ -33,12 +33,6 @@ public class ReplyVO {
 	@JsonFormat(pattern = "yyyy-MM-dd a hh:mm:ss") 
 	private LocalDateTime updated_at;
 
-	public ReplyVO(int reply_bno, String content, String writer) {
-		this.reply_bno = reply_bno;
-		this.content = content;
-		this.writer = writer;
-	} 
-
 	public ReplyVO(int reply_no, int reply_bno, String content, String writer, LocalDateTime created_at,
 			LocalDateTime updated_at) {
 		this.reply_no = reply_no;

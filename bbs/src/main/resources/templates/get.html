@@ -85,6 +85,7 @@
     <!-- 오른쪽 숨김창 , JS 링크들 -->
     <hidden th:replace="fragments/hidden :: 숨김창"></hidden>
     <jslink th:replace="fragments/jslink :: 링크"></jslink>
+    <script th:src="@{/js/Fetch-API.js}"></script>
     <script>
       function deleteConfirm() {
         if (confirm('정말로 삭제할까요?')) {
@@ -108,9 +109,102 @@
         });
       });
 
+      // fetch-api 객체 선언하기
+      const http = new EasyHTTP();
+
       // 댓글달기 버튼 클릭 시 이벤트
       const replyButton = document.getElementById('reply-btn');
-      replyButton.addEventListener('click', function () {});
+      replyButton.addEventListener('click', function () {
+        const data = {
+          reply_bno: '[[${board.bno}]]',
+          content: document.getElementById('content').value,
+          writer: document.getElementById('writer').value,
+        };
+        http
+          .post('/reply', data)
+          .then((res) => console.log(res))
+          .catch((err) => console.log(err));
+
+        location.reload();
+      });
+
+      // updateReply(this)에서 this는 현재 선택한 객체(자신)
+      function updateReply(el) {
+        // el은 매개변수
+        const 댓글내용 = el.parentElement.previousElementSibling.previousElementSibling;
+        const 댓글수정 = el.parentElement.previousElementSibling;
+        const 삭제버튼 = el.nextElementSibling;
+
+        if (el.textContent === '수정') {
+          댓글내용.style.display = 'none';
+          댓글수정.style.display = 'block';
+          삭제버튼.style.visibility = 'hidden';
+          el.textContent = '수정 완료';
+        } else {
+          // 수정완료로 바뀐 버튼을 눌렀을 때
+          const data = {
+            reply_no: el.dataset.id,
+            content: 댓글수정.value,
+          };
+          http
+            .put('/reply', data)
+            .then((res) => (댓글내용.textContent = res.content))
+            .catch((err) => console.log(err));
+
+          댓글내용.style.display = 'block';
+          댓글수정.style.display = 'none';
+          삭제버튼.style.visibility = 'visible';
+          el.textContent = '수정';
+
+          location.reload();
+        }
+      }
+
+      function deleteReply(e) {
+        http
+          .delete('/reply/' + e.dataset.id)
+          .then((res) => console.log(res))
+          .catch((err) => console.log(err));
+
+        location.reload();
+      }
+
+      function replyListView(items) {
+        // 댓글을 입력할 ul태그 객체 선택
+        const replyList = document.getElementById('reply-list');
+        let lis = '';
+
+        items.forEach(function (item) {
+          let writer = item.writer;
+          let content = item.content;
+          let updateTime = item.updated_at;
+          let id = item.reply_no;
+
+          // ``(벡틱)은 변수를 바로 넣을 수 있음, 문자열 취급
+          let li = `<li class="list-group-item mt-2" style="position: relative">
+              <div>${writer}  ( ${updateTime} ) </div>
+              <p class="mb-0">${content}</p>
+              <textarea class="w-100" style="display:none">${content}</textarea>
+              <div style="position: absolute; top: 10px; right: 10px">
+                <button class="badge bg-gradient-info ms-auto" onclick="updateReply(this)" data-id="${id}">수정</button>
+                <button class="badge bg-gradient-danger" onclick="deleteReply(this)" data-id="${id}">삭제</button>
+              </div>
+            </li>`;
+
+          lis += li; // lis에 li를 계속 더해준다
+        });
+        // 댓글들 출력
+        replyList.innerHTML = lis;
+      }
+
+      // html문서가 준비되면 실행하기(자동실행)
+      document.addEventListener('DOMContentLoaded', function () {
+        // 댓글들 출력하기
+        http
+          .get('/reply/' + '[[${board.bno}]]')
+          .then((data) => replyListView(data))
+          .catch((err) => console.log(err));
+      });
     </script>
   </body>
 </html>
