@@ -27,10 +27,16 @@
 		</trim>
 	</sql>
 
-	<!-- board 테이블에 데이터 넣기 -->
-    <insert id="enroll" parameterType="BoardVO"> <!-- application.properties에 설정을 하지 않았다면 resultType="com.myapp.bbs.model.BoardVO" 라고 적었야함 -->
-		insert into board(title, content, writer) 
-		values (#{title}, #{content}, #{writer});
+	<!-- board 테이블에 데이터(공지사항) 넣기 -->
+    <insert id="enrollNotice" parameterType="BoardVO"> <!-- application.properties에 설정을 하지 않았다면 resultType="com.myapp.bbs.model.BoardVO" 라고 적었야함 -->
+		insert into board(title, content, writer, kinds) 
+		values (#{title}, #{content}, #{writer}, 1);
+    </insert>
+    
+   	<!-- board 테이블에 데이터(게시판) 넣기 -->
+    <insert id="enrollBoard" parameterType="BoardVO"> <!-- application.properties에 설정을 하지 않았다면 resultType="com.myapp.bbs.model.BoardVO" 라고 적었야함 -->
+		insert into board(title, content, writer, kinds) 
+		values (#{title}, #{content}, #{writer}, 0);
     </insert>
 	
 	<!-- board 테이블에 등록된 모든 글 불러오기 -->
@@ -38,15 +44,30 @@
      	select * 
      	from board
     </select>
+    <!-- board 테이블에 등록된 공지사항 모든 글 불러오기 -->
+    <select id="getListNoticePaging" resultType="BoardVO">
+    	select *
+    	from ( 
+    		select bno, title, writer, regdate, updatedate, kinds
+    		from board
+    		where kinds=1
+    		<if test="keyword != null">
+    			<include refid="criteria"></include>
+    		</if>
+    		
+    		order by bno desc
+    		) as T1
+    	limit #{skip}, #{amount}
+    </select>
     
     <!-- 게시물 목록(페이징) : skip, amount는 Criteria 객체에 입력됨 -->
     <!--  concat은 문자열을 합쳐줌 -->
     <select id="getListPaging" resultType="BoardVO">
     	select *
     	from ( 
-    		select bno, title, writer, regdate, updatedate
+    		select bno, title, writer, regdate, updatedate, kinds
     		from board
-    		
+    		where kinds=0
     		<if test="keyword != null">
     			<include refid="criteria"></include>
     		</if>

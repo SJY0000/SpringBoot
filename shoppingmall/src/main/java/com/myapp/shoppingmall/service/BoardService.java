@@ -7,7 +7,11 @@ import com.myapp.shoppingmall.entities.Criteria;
 
 public interface BoardService {
 
-	public void enroll(BoardVO board); // 게시판 글 등록
+	public void enrollNotice(BoardVO board); // 공지사항 글 등록
+	
+	public void enrollBoard(BoardVO board); // 게시판 글 등록
+	
+	public List<BoardVO> getListNoticePaging(Criteria cri);
 	
 	public List<BoardVO> getList(); // 게시판 모든 글 불러오기
 	
@@ -15,7 +19,7 @@ public interface BoardService {
 	public List<BoardVO> getListPaging(Criteria cri); // 게시판 모든 글 불러오기(페이징 적용)
 	
 	public BoardVO getPage(int bno); // 게시글 불러오기
-	
+		
 	public int modify(BoardVO board); // 게시글 수정하기
 	
 	public int delete(int bno); // 게시글 삭제

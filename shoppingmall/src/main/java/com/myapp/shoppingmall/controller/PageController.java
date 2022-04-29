@@ -1,5 +1,7 @@
 package com.myapp.shoppingmall.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,7 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 
 import com.myapp.shoppingmall.dao.PageRepository;
+import com.myapp.shoppingmall.entities.BoardVO;
+import com.myapp.shoppingmall.entities.Criteria;
 import com.myapp.shoppingmall.entities.Page;
+import com.myapp.shoppingmall.service.BoardService;
 
 @Controller
 @RequestMapping("/")
@@ -22,12 +27,21 @@ public class PageController {
 	@Autowired
 	private PageRepository pageRepo;
 	
+	@Autowired
+	private BoardService boardService;
+	
 	@GetMapping
 	public String home(Model model) {
 		// entities의 page
 		Page page = pageRepo.findBySlug("home");
 		
 		model.addAttribute("page", page);
+		
+		List<BoardVO> list = boardService.getListPaging(new Criteria(1,5));
+		List<BoardVO> noticeList = boardService.getListNoticePaging(new Criteria(1,5));
+		
+		model.addAttribute("list", list);
+		model.addAttribute("noticeList", noticeList);
 		
 		return "page"; // page.html로 이동
 	}
@@ -41,6 +55,11 @@ public class PageController {
 		model.addAttribute("page", page);
 		
 		return "page";
+	}
+	
+	@GetMapping("/aboutus")
+	public String aboutUs() {
+		return "aboutus";
 	}
 	
 	@GetMapping("/login")

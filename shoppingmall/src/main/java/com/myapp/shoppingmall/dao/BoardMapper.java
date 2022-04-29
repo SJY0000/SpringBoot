@@ -11,7 +11,11 @@ import com.myapp.shoppingmall.entities.Criteria;
 @Mapper
 public interface BoardMapper {
 
-	public void enroll(BoardVO board); // 게시판 글 등록
+	public void enrollNotice(BoardVO board); // 공지사항 글 등록
+	
+	public void enrollBoard(BoardVO board); // 게시판 글 등록
+	
+	public List<BoardVO> getListNoticePaging(Criteria cri);
 	
 	public List<BoardVO> getList(); // 게시판 모든 글 불러오기
 	

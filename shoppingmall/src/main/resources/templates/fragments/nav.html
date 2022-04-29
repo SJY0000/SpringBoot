@@ -20,9 +20,9 @@
       </li>
     </ul>
     <!-- 로그인 정보가 있으면 로그아웃(Security) 표시 -->
-    <form th:if="${principal != null}" th:action="@{/logout}" method="post">
+    <form class="" th:if="${principal != null}" th:action="@{/logout}" method="post">
       <span class="text-white" th:text="${'🖐하이, ' + principal}"></span>
-      <button class="btn btn-secondary ml-2 mt-2">로그아웃</button>
+      <button class="btn btn-secondary ml-2">로그아웃</button>
     </form>
   </div>
 </nav>

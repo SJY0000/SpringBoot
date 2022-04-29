@@ -23,4 +23,9 @@ $(function () {
   $('a.nav-link').on('mouseenter', function () {
     $('a.nav-link').closest('li').toggleClass('Choice');
   });
+
+  const asd = document.querySelector('.c');
+  asd.addEventListener('click', function (e) {
+    asd.toggleClass('.hide');
+  });
 });

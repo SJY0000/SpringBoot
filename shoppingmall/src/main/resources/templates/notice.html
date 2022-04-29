@@ -9,7 +9,7 @@
       <!-- 컨텐츠 시작 -->
       <div class="container-fluid py-4">
         <!-- 빈 컨텐츠 (여기서 시작)-->
-        <a th:href="@{/enrollBoard}" class="btn btn-primary my-3">게시글 등록</a>
+        <a th:href="@{/enrollNotice}" class="btn btn-primary my-3">게시글 등록</a>
         <div class="card">
           <div class="table-responsive">
             <table class="table align-items-center mb-0">
@@ -68,7 +68,7 @@
             <nav aria-label="Page navigation" th:if="${pmk.endPage > 0}">
               <ul class="pagination justify-content-center mt-5">
                 <li class="page-item" th:if="${pmk.prev}">
-                  <a class="page-link" th:href="@{/board} + '?pageNum=__${pmk.startPage-1}__'" aria-label="이전">
+                  <a class="page-link" th:href="@{/notice} + '?pageNum=__${pmk.startPage-1}__'" aria-label="이전">
                     <span class="material-icons">
                       keyboard_arrow_left
                     </span>
@@ -76,11 +76,11 @@
                   </a>
                 </li>
                 <li class="page-item" th:classappend="${pmk.cri.pageNum == number} ? 'active' : ''" th:each="number : ${#numbers.sequence(pmk.startPage, pmk.endPage)}">
-                  <a class="page-link" th:href="@{/board} + '?pageNum=__${number}__'" th:text="${number}"></a>
+                  <a class="page-link" th:href="@{/notice} + '?pageNum=__${number}__'" th:text="${number}"></a>
                 </li>
                 
                 <li class="page-item" th:if="${pmk.next}">
-                  <a class="page-link" th:href="@{/board} + '?pageNum=__${pmk.endPage+1}__'" aria-label="다음">
+                  <a class="page-link" th:href="@{/notice} + '?pageNum=__${pmk.endPage+1}__'" aria-label="다음">
                     <span class="material-icons">
                       keyboard_arrow_right
                     </span>
@@ -107,7 +107,7 @@
           keyword = '&keyword=' + currentKeyword; // 키워드가 있을 경우에 '&keyword=키워드'
           type = '&type=' + searchType.value;
         }
-        location.href = '/board?pageNum=1' + keyword + type; // 처음 키워드로 검색시 무조건 1페이지로 이동
+        location.href = '/notice?pageNum=1' + keyword + type; // 처음 키워드로 검색시 무조건 1페이지로 이동
       })
 
       // 페이지네이션의 a 태그들을 전부 자바스크립트 요청으로 바꾸기(키워드 추가)

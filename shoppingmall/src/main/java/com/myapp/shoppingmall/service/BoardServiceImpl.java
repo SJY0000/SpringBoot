@@ -20,8 +20,18 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	@Override
-	public void enroll(BoardVO board) {
-		boardMapper.enroll(board);
+	public void enrollNotice(BoardVO board) {
+		boardMapper.enrollNotice(board);
+	}
+	
+	@Override
+	public void enrollBoard(BoardVO board) {
+		boardMapper.enrollBoard(board);
+	}
+	
+	@Override
+	public List<BoardVO> getListNoticePaging(Criteria cri) {
+		return boardMapper.getListNoticePaging(cri);
 	}
 
 	@Override
@@ -53,5 +63,6 @@ public class BoardServiceImpl implements BoardService {
 	public int getTotal(Criteria cri) {
 		return boardMapper.getTotal(cri);
 	}
+
 
 }

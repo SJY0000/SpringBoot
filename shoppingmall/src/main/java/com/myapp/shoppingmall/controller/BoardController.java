@@ -1,5 +1,6 @@
 package com.myapp.shoppingmall.controller;
 
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +18,7 @@ import com.myapp.shoppingmall.service.BoardService;
 import lombok.extern.java.Log;
 
 @Controller
-@RequestMapping("/board")
+@RequestMapping
 @Log	// console의 Log 출력 (print out 대신 사용)
 public class BoardController {
 	
@@ -27,7 +28,7 @@ public class BoardController {
 		this.boardService = boardService;
 	}
 
-	@GetMapping
+	@GetMapping("/board")
 	public String boardListGet(Criteria cri, Model model) {
 		log.info("게시판 리스트 페이지 진입");
 		model.addAttribute("boardList", boardService.getListPaging(cri));
@@ -38,6 +39,17 @@ public class BoardController {
 		
 		return "list";
 	}
+	@GetMapping("/notice")
+	public String NoticeListGet(Criteria cri, Model model) {
+		model.addAttribute("boardList", boardService.getListNoticePaging(cri));
+
+		int total = boardService.getTotal(cri);
+		PageMakerDTO pmk = new PageMakerDTO(total, cri);
+		model.addAttribute("pmk", pmk);
+		
+		return "notice";
+	}
+	
 //	@GetMapping("/list")
 //	public String boardListGet(Model model) {
 //		log.info("게시판 리스트 페이지 진입");
@@ -63,16 +75,31 @@ public class BoardController {
 		return "get";
 	}
 	
-	@GetMapping("/enroll")
+	@GetMapping("/enrollNotice")
+	public String noticeEnrollGet(Model model) {
+		log.info("공지사항 등록 페이지 진입");
+		model.addAttribute("board", new BoardVO());
+		return "enrollNotice";
+	}
+	
+	@GetMapping("/enrollBoard")
 	public String boardEnrollGet(Model model) {
 		log.info("게시판 등록 페이지 진입");
 		model.addAttribute("board", new BoardVO());
-		return "enroll";
+		return "enrollBoard";
 	}
 	
-	@PostMapping("/enroll")
+	@PostMapping("/enrollNotice")
+	public String noticeEnrollPost(BoardVO board, RedirectAttributes attr) {
+		boardService.enrollNotice(board);
+		attr.addFlashAttribute("message", "게시글 등록 완료!");
+		
+		return "redirect:/notice"; // Post 다음 Redirect
+	}
+	
+	@PostMapping("/enrollBoard")
 	public String boardEnrollPost(BoardVO board, RedirectAttributes attr) {
-		boardService.enroll(board);
+		boardService.enrollBoard(board);
 		attr.addFlashAttribute("message", "게시글 등록 완료!");
 		
 		return "redirect:/board"; // Post 다음 Redirect

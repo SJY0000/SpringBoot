@@ -16,7 +16,8 @@
                     <p class="mb-0">새로운 게시글을 등록해주세요.</p>
                   </div>
                   <div class="card-body bg-white">
-                    <form role="form" th:action="@{/board/enroll}" method="post" th:object="${board}">
+                    <form role="form" th:action="@{/enrollNotice}" method="post" th:object="${board}">
+                      <input type="hidden" id="kinds" name="kinds" th:value="${kinds}" />
                       <div class="input-group input-group-outline mb-3">
                         <label class="form-label">제목</label>
                         <input type="text" class="form-control" th:field="*{title}" required />
@@ -27,8 +28,7 @@
                         </div>
                       </div>
                       <div class="input-group input-group-outline mb-3">
-                        <label class="form-label">작성자</label>
-                        <input type="text" class="form-control" th:field="*{writer}" required />
+                        <input type="hidden" class="form-control" id="writer" name="writer" th:value="${principal}" />
                       </div>
                       <div class="text-center">
                         <button type="submit" class="btn btn-lg bg-gradient-primary btn-lg w-100 mt-4 mb-0">게시하기</button>

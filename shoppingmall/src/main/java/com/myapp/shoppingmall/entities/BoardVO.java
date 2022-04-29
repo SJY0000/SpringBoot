@@ -13,4 +13,5 @@ public class BoardVO {
 	private String writer;	// 게시판 작성자
 	private LocalDateTime regdate; // timestamp에서 날짜시간을 가져오는 자바 날짜시간/데이터
 	private LocalDateTime updateDate;
+	private String kinds;	// 게시판 분류
 }

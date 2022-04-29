@@ -1,5 +1,5 @@
 <div class="col-2" th:fragment="categories">
-  <h3 class="display-5">Categories</h3>
+  <h3 class="display-5 c">Categories</h3>
   <ul class="list-group text-center">
     <li class="list-group-item">
       <a th:href="@{/category/all}" class="nav-link">All Products</a>
@@ -9,4 +9,10 @@
     </li>
   </ul>
   <div th:replace="/fragments/cart_partial"></div>
+  <script src="">
+    const asd = document.querySelector('.c');
+    asd.addEventListener('click', function (e) {
+      asd.toggleClass('.hide');
+    });
+  </script>
 </div>
